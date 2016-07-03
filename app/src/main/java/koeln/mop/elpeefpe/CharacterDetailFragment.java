@@ -65,11 +65,6 @@ public class CharacterDetailFragment extends Fragment {
 
         // Show the dummy content as text in a TextView.
         if (mCharacter != null) {
-            Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.detail_toolbar);
-            if (toolbar != null) {
-
-                toolbar.setTitle(mCharacter.name);
-            }
             if (mCharacter.elpe.value > 0) {
                 rootView.findViewById(R.id.elpe_container).setVisibility(LinearLayout.VISIBLE);
                 ((TextView) rootView.findViewById(R.id.elpe_value)).setText(Integer.toString(mCharacter.elpe.value));

@@ -39,8 +39,12 @@ public class CharacterForm {
     }
 
     public boolean isValid() {
-        return name.trim().length() > 0
-                && Integer.parseInt(elpe) >= 0
-                && Integer.parseInt(efpe) >= 0;
+        try {
+            return name.trim().length() > 0
+                    && Integer.parseInt(elpe) >= 0
+                    && Integer.parseInt(efpe) >= 0;
+        } catch (NumberFormatException e) {
+            return false;
+        }
     }
 }

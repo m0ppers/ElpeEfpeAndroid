@@ -58,8 +58,13 @@ public class ElpeEfpeTableView extends TableLayout {
     }
 
     public void addDamage(DamageType type) {
+        // mop: more damage than we can display :S
+        if (mIndices[0] >= mImageViews.length) {
+            return;
+        }
         int index = Arrays.asList(DamageType.ordered).indexOf(type);
 
+        // mop: add a gap
         for (int i=mIndices[0];i>mIndices[index];i--) {
             mImageViews[i].setImageDrawable(mImageViews[i-1].getDrawable());
         }

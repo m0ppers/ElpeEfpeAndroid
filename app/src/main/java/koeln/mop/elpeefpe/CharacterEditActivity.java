@@ -10,6 +10,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import java.util.Map;
+
 /**
  * Created by Andreas Streichardt on 22.06.2016.
  */
@@ -85,8 +87,63 @@ public class CharacterEditActivity extends AppCompatActivity {
 
             if (characterForm.isValid()) {
                 character.name = characterForm.getName().trim();
+
+                int oldElpe = character.elpe.value;
+                int oldEfpe = character.efpe.value;
+
                 character.elpe.value = Integer.parseInt(characterForm.getElpe());
                 character.efpe.value = Integer.parseInt(characterForm.getEfpe());
+
+                // mop: ugly!
+                if (oldElpe > character.elpe.value) {
+                    int total = 0;
+                    for (Map.Entry<DamageType, Integer> entry : character.elpe.damage.entrySet()) {
+                        total += entry.getValue();
+                    }
+
+                    int toRemove = total - character.elpe.value * character.elpe.multiplier;
+                    if (toRemove > 0) {
+                        for (DamageType damage : DamageType.ordered) {
+                            int value = character.elpe.damage.get(damage);
+                            int sub;
+                            if (value < toRemove) {
+                                sub = value;
+                            } else {
+                                sub = toRemove;
+                            }
+                            character.elpe.damage.put(damage, value - sub);
+                            toRemove -= sub;
+                            if (toRemove == 0) {
+                                break;
+                            }
+                        }
+                    }
+                }
+
+                if (oldEfpe > character.efpe.value) {
+                    int total = 0;
+                    for (Map.Entry<DamageType, Integer> entry : character.efpe.damage.entrySet()) {
+                        total += entry.getValue();
+                    }
+
+                    int toRemove = total - character.efpe.value * character.efpe.multiplier;
+                    if (toRemove > 0) {
+                        for (DamageType damage : DamageType.ordered) {
+                            int value = character.efpe.damage.get(damage);
+                            int sub;
+                            if (value < toRemove) {
+                                sub = value;
+                            } else {
+                                sub = toRemove;
+                            }
+                            character.efpe.damage.put(damage, value - sub);
+                            toRemove -= sub;
+                            if (toRemove == 0) {
+                                break;
+                            }
+                        }
+                    }
+                }
                 character = db.save(character);
 
                 Intent intent = new Intent(this, CharacterDetailActivity.class);
