@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge xmlns:android="http://schemas.android.com/apk/res/android">
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="+"
+    <ImageButton
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/ic_add"
         android:layout_margin="5dp"
+        android:background="@drawable/circle"
         android:id="@+id/plus" />
 
     <ImageView
@@ -17,11 +18,12 @@
         android:maxHeight="40dp"
         android:adjustViewBounds="true"
         android:textAlignment="center" />
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <ImageButton
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:layout_margin="5dp"
-        android:text="-"
+        android:src="@drawable/ic_remove"
+        android:background="@drawable/circle"
         android:id="@+id/minus" />
 </merge>

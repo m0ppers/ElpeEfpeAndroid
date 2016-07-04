@@ -15,7 +15,7 @@ public class Character {
 
     public void setValues(int elpe, int efpe) {
         this.elpe = new Value();
-        this.elpe.multiplier = 4;
+        this.elpe.multiplier = 5;
         this.elpe.value = elpe;
 
         this.efpe = new Value();

@@ -6,6 +6,7 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import koeln.mop.elpeefpe.R;
@@ -48,12 +49,12 @@ public class ElpeEfpeControlView extends LinearLayout {
     }
 
     public void onAdd(OnClickListener listener) {
-        Button plusButton = (Button) findViewById(R.id.plus);
+        ImageButton plusButton = (ImageButton) findViewById(R.id.plus);
         plusButton.setOnClickListener(listener);
     }
 
     public void onRemove(OnClickListener listener) {
-        Button minusButton = (Button) findViewById(R.id.minus);
+        ImageButton minusButton = (ImageButton) findViewById(R.id.minus);
         minusButton.setOnClickListener(listener);
     }
 }
