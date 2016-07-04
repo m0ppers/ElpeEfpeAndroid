@@ -21,6 +21,7 @@ android {
         enabled = true
     }
     lintOptions {
+        checkReleaseBuilds false
         disable 'GoogleAppIndexingWarning', 'SetTextI18n', 'HardcodedText', 'UnusedResources'
     }
 }
