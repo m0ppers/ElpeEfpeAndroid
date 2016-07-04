@@ -41,7 +41,7 @@ public class CharacterListActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Context context = v.getContext();
-                Intent intent = new Intent(context, CharacterEditActivity.class);
+                Intent intent = new Intent(context, CharacterCreateActivity.class);
 
                 context.startActivity(intent);
             }

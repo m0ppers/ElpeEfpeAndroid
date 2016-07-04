@@ -16,17 +16,36 @@ import java.util.Map;
  * Created by Andreas Streichardt on 22.06.2016.
  */
 public class CharacterEditActivity extends AppCompatActivity {
-    private Character character;
-    private CharacterForm characterForm;
+    protected Character character;
+    protected CharacterForm characterForm;
+
+    protected int getContentViewId() {
+        return R.layout.activity_character_edit;
+    }
+
+    protected int getToolbarId() {
+        return R.id.edit_toolbar;
+    }
+
+    protected int getMenuId() {
+        return R.menu.edit;
+    }
+
+    protected int getContainerId() {
+        return R.id.character_edit_container;
+    }
+
+    protected Character initCharacter() {
+        DBHandler dbHandler = new DBHandler(this);
+        return dbHandler.find(getIntent().getIntExtra(CharacterDetailFragment.ARG_CHARACTER_ID, 0));
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_character_edit);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.edit_toolbar);
+        setContentView(getContentViewId());
+        Toolbar toolbar = (Toolbar) findViewById(getToolbarId());
         setSupportActionBar(toolbar);
-
-
 
         // Show the Up button in the action bar.
         ActionBar actionBar = getSupportActionBar();
@@ -48,21 +67,13 @@ public class CharacterEditActivity extends AppCompatActivity {
             // using a fragment transaction.
             Bundle arguments = new Bundle();
 
-            if (getIntent().hasExtra(CharacterDetailFragment.ARG_CHARACTER_ID)) {
-                DBHandler dbHandler = new DBHandler(this);
-                character = dbHandler.find(getIntent().getIntExtra(CharacterDetailFragment.ARG_CHARACTER_ID, 0));
-            } else {
-                character = new Character();
-                character.name = "";
-                character.setValues(0, 0);
-            }
+            character = this.initCharacter();
 
             CharacterEditFragment fragment = new CharacterEditFragment();
             fragment.setArguments(arguments);
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.character_edit_container, fragment)
+                    .add(getContainerId(), fragment)
                     .commit();
-
 
             characterForm = new CharacterForm(character);
             fragment.setCharacterForm(characterForm);
@@ -80,7 +91,12 @@ public class CharacterEditActivity extends AppCompatActivity {
             //
             // http://developer.android.com/design/patterns/navigation.html#up-vs-back
             //
-            NavUtils.navigateUpTo(this, new Intent(this, CharacterListActivity.class));
+            Intent intent = getParentActivityIntent();
+            Bundle extras = getIntent().getExtras();
+            if (extras != null) {
+                intent.putExtras(extras);
+            }
+            NavUtils.navigateUpTo(this, intent);
             return true;
         } else if (id == R.id.action_save) {
             DBHandler db = new DBHandler(this);
@@ -159,7 +175,7 @@ public class CharacterEditActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.edit, menu);
+        getMenuInflater().inflate(getMenuId(), menu);
         return true;
     }
 }
