@@ -2,6 +2,7 @@ package koeln.mop.elpeefpe;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -77,7 +78,16 @@ public class CharacterListActivity extends AppCompatActivity {
         @Override
         public void onBindViewHolder(final ViewHolder holder, int position) {
             holder.mItem = mValues.get(position);
-            holder.mContentView.setText(mValues.get(position).name);
+            int woundLevel = (holder.mItem.elpe.damage.get(DamageType.VERZEHRT) - 1) / holder.mItem.elpe.value;
+            holder.mContentView.setText(holder.mItem.name);
+            if (woundLevel > 0) {
+                holder.mWoundDeductionView.setText(String.valueOf((int) -Math.pow(2, woundLevel - 1)));
+                holder.mWoundDeductionView.setTextColor(Color.RED);
+            } else {
+                holder.mWoundDeductionView.setText("0");
+            }
+            holder.mFocusLeftView.setText(String.valueOf(
+                    holder.mItem.efpe.value - holder.mItem.efpe.sumDamage()));
 
             holder.mView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -98,13 +108,15 @@ public class CharacterListActivity extends AppCompatActivity {
 
         public class ViewHolder extends RecyclerView.ViewHolder {
             public final View mView;
-            public final TextView mContentView;
+            public final TextView mContentView, mWoundDeductionView, mFocusLeftView;
             public Character mItem;
 
             public ViewHolder(View view) {
                 super(view);
                 mView = view;
                 mContentView = (TextView) view.findViewById(R.id.content);
+                mWoundDeductionView = (TextView) view.findViewById(R.id.wound_deduction);
+                mFocusLeftView = (TextView) view.findViewById(R.id.focus_left);
             }
 
             @Override

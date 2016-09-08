@@ -28,6 +28,14 @@ public class Value {
         this.value = value;
     }
 
+    public int sumDamage() {
+        int sum = 0;
+        for (int dmg : damage.values()) {
+            sum += dmg;
+        }
+        return sum;
+    }
+
     public ArrayList<ValueChange> applyValueChange(ValueChange change) {
         ArrayList<ValueChange> actualChanges = new ArrayList<ValueChange>();
 
@@ -40,10 +48,7 @@ public class Value {
                 actualChanges.add(change);
             }
         } else {
-            int total = 0;
-            for (Map.Entry<DamageType, Integer> entry : damage.entrySet()) {
-                total += entry.getValue();
-            }
+            int total = sumDamage();
 
             if (total < value * multiplier) {
                 damage.put(change.type, damage.get(change.type) + 1);
